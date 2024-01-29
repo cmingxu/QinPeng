@@ -46,21 +46,43 @@ void print_in_frame_t(in_frame_t *frame) {
 
 void bytes_to_float(unsigned char *bytes, float *f) {
   union FloatValue fv;
-  printf("%02x %02x %02x %02x\n", bytes[0], bytes[1], bytes[2], bytes[3]);
-  fv.bytes[0] = bytes[0];
-  fv.bytes[1] = bytes[1];
-  fv.bytes[2] = bytes[2];
-  fv.bytes[3] = bytes[3];
+  fv.bytes[0] = bytes[3];
+  fv.bytes[1] = bytes[2];
+  fv.bytes[2] = bytes[1];
+  fv.bytes[3] = bytes[0];
+
   *f = fv.f;
+}
+
+void bytes_to_multiple_float(unsigned char *bytes, float *f, size_t count) {
+  for(int i = 0; i < count; i ++) {
+    union FloatValue fv;
+    fv.bytes[0] = bytes[4 * i + 3];
+    fv.bytes[1] = bytes[4 * i + 2];
+    fv.bytes[2] = bytes[4 * i + 1];
+    fv.bytes[3] = bytes[4 * i + 0];
+    *(f + i) = fv.f;
+  }
 }
 
 void float_to_bytes(float f, unsigned char *bytes) {
   union FloatValue fv;
   fv.f = f;
-  bytes[0] = fv.bytes[0];
-  bytes[1] = fv.bytes[1];
-  bytes[2] = fv.bytes[2];
-  bytes[3] = fv.bytes[3];
+  bytes[0] = fv.bytes[3];
+  bytes[1] = fv.bytes[2];
+  bytes[2] = fv.bytes[1];
+  bytes[3] = fv.bytes[0];
+}
+
+void multiple_float_to_bytes(float *f, unsigned char *bytes, size_t num_of_float) {
+  for(int i = 0; i < num_of_float; i ++) {
+    union FloatValue fv;
+    fv.f = *(f + i);
+    bytes[4 * i + 3] = fv.bytes[0];
+    bytes[4 * i + 2] = fv.bytes[1];
+    bytes[4 * i + 1] = fv.bytes[2];
+    bytes[4 * i + 0] = fv.bytes[3];
+  }
 }
 
 #endif /* ifndef  */

@@ -25,6 +25,37 @@ void main()
     printf("pd voltage: %f\n", v);
   }
 
+  for (int i = 0;  i < r;  i++) {
+    float v = get_l1550_opt_pwr(&devs[i]);
+    printf("index %d 1550 opt pwr: %f\n",i,  v);
+  }
+
+  for (int i = 0;  i < r;  i++) {
+    float v = get_l1310_opt_pwr(&devs[i]);
+    printf("index %d 1310 opt pwr: %f\n", i, v);
+  }
+
+  for (int i = 0;  i < r;  i++) {
+    float v = get_l850_opt_pwr(&devs[i]);
+    printf("index %d 850 opt pwr: %f\n", i, v);
+  }
+
+  for (int i = 0;  i < r;  i++) {
+    float para[4] = {1, 2, 3, 4};
+    int r = set_l1550_para(&devs[i], para);
+    for(int j = 0; j < 4; j ++) {
+      printf("index %d set 1550 para: %f\n",j, para[j] );
+    }
+  }
+
+  for (int i = 0;  i < r;  i++) {
+    float para[4] = {0};
+    int r = get_l1550_para(&devs[i], para);
+    for(int j = 0; j < 4; j ++) {
+      printf("get 1550 para %d: %f\n",j, para[j] );
+    }
+  }
+
   close_opm_devices(&devs, r);
 }
 

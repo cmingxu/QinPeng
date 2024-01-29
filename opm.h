@@ -38,5 +38,15 @@ typedef struct device{
 
 int open_opm_devices(opm_device_t **);
 void close_opm_devices(opm_device_t **, size_t len);
+
 float get_pd_vol(opm_device_t *);
+float get_l1550_opt_pwr(opm_device_t *);
+float get_l1310_opt_pwr(opm_device_t *);
+float get_l850_opt_pwr(opm_device_t *);
+int get_l1550_para(opm_device_t *, float*);
+int get_l1310_para(opm_device_t *, float*);
+int get_l850_para(opm_device_t *, float*);
+int set_l1550_para(opm_device_t *, float*);
+int set_l1310_para(opm_device_t *, float*);
+int set_l850_para(opm_device_t *, float*);
 #endif
