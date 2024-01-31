@@ -97,7 +97,7 @@ int main(int argc, char** argv)
     {
       case 'l':
         print_device_list(devs, r);
-        break;
+        return 0;
       case 'i':
         index = atoi(optarg);
         break;
